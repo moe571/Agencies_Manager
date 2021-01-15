@@ -1,0 +1,4 @@
+{
+    "mongoURI" : "mongodb+srv://mohamed:admin123@cluster0.14bfp.mongodb.net/agenciesManager?retryWrites=true&w=majority",
+    "jwtSecret" : "sm_myJwtSecret"
+}
