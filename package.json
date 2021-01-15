@@ -1,5 +1,5 @@
 {
-  "name": "Agencies_Manager",
+  "name": "agencies-manager",
   "version": "1.0.0",
   "description": "A small web application for managing agencies (CRUD)",
   "main": "server.js",
