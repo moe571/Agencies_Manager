@@ -9,7 +9,7 @@ const Agency = require("../../models/Agency");
 // @desc    Fetch All agencies
 // @access  Private
 
-router.get("/", (req, res) => {
+router.get("/", auth, (req, res) => {
   Agency.find()
     .then((agencies) => res.json(agencies))
     .catch((err) => console.log(err));
@@ -19,7 +19,7 @@ router.get("/", (req, res) => {
 // @desc    Post a new Agency
 // @access  Private
 
-router.post("/", (req, res) => {
+router.post("/", auth, (req, res) => {
   const newAgency = new Agency({
     name: req.body.name,
     address: req.body.address,
@@ -37,7 +37,7 @@ router.post("/", (req, res) => {
 // @desc    Delete an Agency
 // @access  Private
 
-router.delete("/:id", (req, res) => {
+router.delete("/:id", auth, (req, res) => {
   Agency.findById(req.params.id)
     .then((agency) => agency.remove().then(() => res.json({ success: true })))
     .catch((err) => res.status(400).json({ success: false }));

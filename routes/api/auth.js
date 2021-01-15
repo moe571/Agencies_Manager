@@ -48,4 +48,14 @@ router.post("/", (req, res) => {
   });
 });
 
+// @route   GET api/auth/users
+// @desc    get user data
+// @access  PRIVATE
+
+router.get("/user", auth, (req, res) => {
+  User.findById(req.user.id)
+    .select("-password")
+    .then((user) => res.json(user));
+});
+
 module.exports = router;
