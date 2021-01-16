@@ -1,0 +1,60 @@
+@font-face {
+    font-family: GoogleSans;
+    src: url(../ProductSans-Regular.ttf);
+  } 
+
+.Navbar {
+    height: 72px;
+    width: 100%;
+    background-color: #126cfb;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding-left: 1.5rem;
+    padding-right: 1.5rem;
+    font-family: GoogleSans;
+}
+.Navbar-Brand {
+    color: #FFF;
+    font-weight: bold;
+    font-size: 1.1rem;
+    font-family: GoogleSans;
+}
+.userActionsBtn {
+    background-color: transparent;
+    background: transparent;
+    border: none;
+    color: #FFF;
+    font-weight: bold;
+}
+.userName {
+    margin-right: 20px ;
+    margin-left: 20px ;
+}
+
+.Navbar-Links {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+/* .MainNavbar {
+    background-color: #126cfb;
+    
+}
+.navbar-brand {
+    color: #FFF !important;
+    font-weight: bold;
+}
+.nav-item {
+    color: #FFF !important;
+    
+}
+
+.userName {
+    color : #FFF !important;
+    vertical-align: middle !important;
+}
+.dropdown-item {
+    position: absolute;
+    left: 0;
+} */

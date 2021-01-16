@@ -1,8 +1,9 @@
 {
   "name": "agencies-manager",
   "scripts": {
-    "start": "node server.js",
-    "server": "nodemon server.js"
+    "start": "nodemon server.js",
+    "frontend" : "cd frontend && yarn start",
+    "dev" : "concurrently \"yarn run start\" \"yarn run frontend\" "
   },
   "version": "1.0.0",
   "description": "A small web application for managing agencies (CRUD)",
