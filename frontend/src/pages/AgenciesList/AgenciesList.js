@@ -22,6 +22,7 @@ import { BiEditAlt } from "react-icons/bi";
 import { HiOutlineTrash } from "react-icons/hi";
 import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
 import Checkbox from "@material-ui/core/Checkbox";
+import MainNavbar from "../../components/MainNavbar/MainNavbar";
 
 const useStyles = makeStyles({
   root: {
@@ -43,6 +44,7 @@ function AgenciesList() {
   const [sideBar, setSideBar] = useState(true);
   return (
     <>
+      <MainNavbar />
       <MenuIcon
         hidden={closeIcon ? true : false}
         onClick={() => setSideBar(true)}

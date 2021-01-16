@@ -80,7 +80,7 @@
 .agencies-table-header input{
     width: 95%;
     padding: 12px 16px;
-    padding-left: 25px !important;
+    padding-left: 35px !important;
     border-radius: 6px;
     border: solid 1.4px #a3b0bd;
     background-color: #ffffff;
@@ -144,6 +144,7 @@
     color: #FFFFFF !important;
     font-weight: bold !important;
     font-family: ProductSans !important;
+    text-transform: none !important;
 }
 
 .expandMoreIcon {
@@ -152,7 +153,7 @@
 }
 .FiFilterIcon {
     position: absolute;
-    left: 15px;
+    left: 25px;
 }
 .BiSearchAltIcon {
     position: absolute;
