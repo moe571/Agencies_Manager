@@ -26,8 +26,9 @@ import Checkbox from "@material-ui/core/Checkbox";
 import MainNavbar from "../../components/MainNavbar/MainNavbar";
 import AddAgencyModal from "../../components/AddAgencyModal/AddAgencyModal";
 import EditAgencyModal from "../../components/EditAgencyModal/EditAgencyModal";
+import moment from "moment";
 
-import { getAgencies } from "../../actions/AgencyActions";
+import { addAgency, getAgencies } from "../../actions/AgencyActions";
 
 const useStyles = makeStyles({
   root: {
@@ -55,15 +56,36 @@ function AgenciesList(props) {
     dispatch(getAgencies());
   }, [dispatch, getAgencies]);
 
-  // if (agencies) {
-  //   console.log(agencies);
-  // }
-
   // ADD Agency Modal
   const [showAdd, setShowAdd] = useState(false);
 
   const handleCloseAdd = () => setShowAdd(false);
   const handleShowAdd = () => setShowAdd(true);
+
+  const [name, setName] = useState("");
+  const [address, setAddress] = useState("");
+  const [wilaya, setWilaya] = useState("");
+  const [commune, setCommune] = useState("");
+  const [phone, setPhone] = useState("");
+
+  const handleAddForm = (e) => {
+    e.preventDefault();
+    const newAgency = {
+      name,
+      address,
+      wilaya,
+      commune,
+      phone,
+    };
+    setName("");
+    setAddress("");
+    setWilaya("");
+    setCommune("");
+    setPhone("");
+
+    dispatch(addAgency(newAgency));
+    setShowAdd(false);
+  };
 
   // EDIT Agency Modal
   const [showEdit, setShowEdit] = useState(false);
@@ -74,7 +96,21 @@ function AgenciesList(props) {
   return (
     <>
       <MainNavbar />
-      <AddAgencyModal show={showAdd} onHide={handleCloseAdd} />
+      <AddAgencyModal
+        show={showAdd}
+        onHide={handleCloseAdd}
+        name={name}
+        setName={setName}
+        address={address}
+        setAddress={setAddress}
+        wilaya={wilaya}
+        setWilaya={setWilaya}
+        commune={commune}
+        setCommune={setCommune}
+        phone={phone}
+        setPhone={setPhone}
+        handleAddForm={handleAddForm}
+      />
       <EditAgencyModal show={showEdit} onHide={handleCloseEdit} />
       <MenuIcon
         hidden={closeIcon ? true : false}
@@ -202,7 +238,7 @@ function AgenciesList(props) {
                   <h6>{agency.phone}</h6>
                 </div>
                 <div className="createdAtArea bodyColumn">
-                  <h6>12 Nov 2020</h6>
+                  <h6>{moment(agency.register_date).format("ll")}</h6>
                 </div>
                 <div className="actionsArea bodyColumn">
                   <BiEditAlt
