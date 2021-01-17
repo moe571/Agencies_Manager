@@ -62,6 +62,17 @@ function AgenciesList(props) {
     dispatch(getAgencies());
   }, [dispatch, getAgencies]);
 
+  const [pageScrolled, setPageScrolled] = useState(false);
+
+  const changeSidebar = () => {
+    if (window.scrollY >= 30) {
+      setPageScrolled(true);
+    } else {
+      setPageScrolled(false);
+    }
+  };
+  window.addEventListener("scroll", changeSidebar);
+
   // ADD Agency Modal
   const [showAdd, setShowAdd] = useState(false);
 
@@ -167,7 +178,10 @@ function AgenciesList(props) {
         fontSize="large"
         className="openSideBarBtn"
       />
-      <div className={sideBar ? "sidebar" : "sidebar hidden"}>
+      <div
+        style={pageScrolled ? { top: "0", zIndex: 999 } : null}
+        className={sideBar ? "sidebar" : "sidebar hidden"}
+      >
         <CloseIcon
           onClick={() => setSideBar(false)}
           hidden={closeIcon ? true : false}

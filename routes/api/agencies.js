@@ -11,9 +11,9 @@ const Agency = require("../../models/Agency");
 
 router.get("/", (req, res) => {
   Agency.find({})
-    .select("_id register_date")
-    .sort({register_date: 1)
-    .exec()
+
+    .sort({ register_date: -1 })
+
     .then((agencies) => res.json(agencies))
     .catch((err) => console.log(err));
 });
