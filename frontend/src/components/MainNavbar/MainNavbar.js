@@ -13,6 +13,9 @@ import Popper from "@material-ui/core/Popper";
 import MenuItem from "@material-ui/core/MenuItem";
 import MenuList from "@material-ui/core/MenuList";
 
+import { logout } from "../../actions/authActions";
+import { connect } from "react-redux";
+
 const useStyles = makeStyles((theme) => ({
   root: {
     position: "relative",
@@ -32,7 +35,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-function MainNavbar() {
+function MainNavbar({ logout, auth }) {
   const classes = useStyles();
   const [open, setOpen] = React.useState(false);
   const handleClick = () => {
@@ -42,6 +45,10 @@ function MainNavbar() {
   const handleClickAway = () => {
     setOpen(false);
   };
+  const logoutUser = () => {
+    logout();
+  };
+
   return (
     <>
       <div className="Navbar">
@@ -55,13 +62,15 @@ function MainNavbar() {
                 type="button"
                 onClick={handleClick}
               >
-                <span className="userName">Horvath Attila</span>
+                <span className="userName">
+                  {auth.user ? auth.user.name : null}
+                </span>
                 <ExpandMoreIcon />
               </button>
               {open ? (
                 <div className={classes.dropdown}>
                   <MenuList>
-                    <MenuItem>Logout</MenuItem>
+                    <MenuItem onClick={logoutUser}>Logout</MenuItem>
                   </MenuList>
                 </div>
               ) : null}
@@ -72,5 +81,7 @@ function MainNavbar() {
     </>
   );
 }
-
-export default MainNavbar;
+const mapStateToProps = (state) => ({
+  auth: state.auth,
+});
+export default connect(mapStateToProps, { logout })(MainNavbar);

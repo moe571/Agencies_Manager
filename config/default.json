@@ -1,4 +1,6 @@
 {
-    "mongoURI" : "mongodb+srv://mohamed:admin123@cluster0.14bfp.mongodb.net/agenciesManager?retryWrites=true&w=majority",
+    "mongoURI" : "mongodb://mohamed:MohamedHamidi2021@cluster0-shard-00-00.14bfp.mongodb.net:27017,cluster0-shard-00-01.14bfp.mongodb.net:27017,cluster0-shard-00-02.14bfp.mongodb.net:27017/agenciesManager?ssl=true&replicaSet=atlas-hdrre9-shard-0&authSource=admin&retryWrites=true&w=majority",
     "jwtSecret" : "sm_myJwtSecret"
 }
+
+

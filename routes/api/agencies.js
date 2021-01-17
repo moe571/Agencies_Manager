@@ -9,7 +9,7 @@ const Agency = require("../../models/Agency");
 // @desc    Fetch All agencies
 // @access  Private
 
-router.get("/", auth, (req, res) => {
+router.get("/", (req, res) => {
   Agency.find()
     .then((agencies) => res.json(agencies))
     .catch((err) => console.log(err));

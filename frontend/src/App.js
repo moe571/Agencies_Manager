@@ -1,18 +1,23 @@
+import React, { useState, useEffect } from "react";
 import "./App.css";
 import "bootstrap/dist/css/bootstrap.min.css";
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
-import MainNavbar from "./components/MainNavbar/MainNavbar";
 import AgenciesList from "./pages/AgenciesList/AgenciesList";
-import { useMediaQuery } from "react-responsive";
 import Login from "./pages/Login/Login";
+import PrivateRoute from "./HOC/PrivateRoute";
+import { useDispatch } from "react-redux";
+import { loadUser } from "./actions/authActions";
 
 function App() {
-  const isTabletOrMobile = useMediaQuery({ query: "(max-width: 1224px)" });
+  const dispatch = useDispatch();
+  useEffect(() => {
+    dispatch(loadUser());
+  }, [dispatch, loadUser]);
   return (
     <div className="App">
       <Router>
         <Switch>
-          <Route path="/" exact component={AgenciesList} />
+          <PrivateRoute path="/" exact component={AgenciesList} />
           <Route path="/login" exact component={Login} />
         </Switch>
       </Router>
