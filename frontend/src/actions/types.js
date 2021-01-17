@@ -1,3 +1,8 @@
+export const GET_AGENCIES = "GET_AGENCIES";
+export const ADD_AGENCY = "ADD_AGENCY";
+export const DELETE_AGENCY = "DELETE_AGENCY";
+export const AGENCIES_LOADING = "AGENCIES_LOADING";
+
 export const USER_LOADING = "USER_LOADING";
 export const USER_LOADED = "USER_LOADED";
 export const AUTH_ERROR = "AUTH_ERROR";

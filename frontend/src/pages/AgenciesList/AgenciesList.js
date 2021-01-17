@@ -1,5 +1,6 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import "./style.css";
+import { useDispatch, useSelector } from "react-redux";
 import CloseIcon from "@material-ui/icons/Close";
 import MenuIcon from "@material-ui/icons/Menu";
 import { useMediaQuery } from "react-responsive";
@@ -23,6 +24,10 @@ import { HiOutlineTrash } from "react-icons/hi";
 import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
 import Checkbox from "@material-ui/core/Checkbox";
 import MainNavbar from "../../components/MainNavbar/MainNavbar";
+import AddAgencyModal from "../../components/AddAgencyModal/AddAgencyModal";
+import EditAgencyModal from "../../components/EditAgencyModal/EditAgencyModal";
+
+import { getAgencies } from "../../actions/AgencyActions";
 
 const useStyles = makeStyles({
   root: {
@@ -35,16 +40,42 @@ const useStyles = makeStyles({
   },
 });
 
-function AgenciesList() {
+function AgenciesList(props) {
   const classes = useStyles();
   const isTabletOrMobile = useMediaQuery({ query: "(max-width: 1224px)" });
   const [closeIcon, setCloseIcon] = useState(() =>
     isTabletOrMobile ? false : true
   );
+  const agencies = useSelector((state) => state.agency.agencies);
   const [sideBar, setSideBar] = useState(true);
+
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    dispatch(getAgencies());
+  }, [dispatch, getAgencies]);
+
+  // if (agencies) {
+  //   console.log(agencies);
+  // }
+
+  // ADD Agency Modal
+  const [showAdd, setShowAdd] = useState(false);
+
+  const handleCloseAdd = () => setShowAdd(false);
+  const handleShowAdd = () => setShowAdd(true);
+
+  // EDIT Agency Modal
+  const [showEdit, setShowEdit] = useState(false);
+
+  const handleCloseEdit = () => setShowEdit(false);
+  const handleShowEdit = () => setShowEdit(true);
+
   return (
     <>
       <MainNavbar />
+      <AddAgencyModal show={showAdd} onHide={handleCloseAdd} />
+      <EditAgencyModal show={showEdit} onHide={handleCloseEdit} />
       <MenuIcon
         hidden={closeIcon ? true : false}
         onClick={() => setSideBar(true)}
@@ -119,6 +150,7 @@ function AgenciesList() {
           </div>
           <div className="agencies-header-element header-action">
             <Button
+              onClick={handleShowAdd}
               variant="contained"
               className="addAgencyBtn"
               startIcon={<ControlPointIcon />}
@@ -151,36 +183,51 @@ function AgenciesList() {
               <h6>Actions</h6>
             </div>
           </div>
-          <div className="table-row">
-            <div className="checkBoxesArea bodyColumn">
-              <Checkbox inputProps={{ "aria-label": "primary checkbox" }} />
-            </div>
-            <div className="nameArea bodyColumn">
-              <h6>Trust Bank</h6>
-            </div>
-            <div className="addressArea bodyColumn">
-              <h6>Kouba, Algiers</h6>
-            </div>
-            <div className="wilayaArea bodyColumn">
-              <h6>Algiers</h6>
-            </div>
-            <div className="phoneArea bodyColumn">
-              <h6>023 10 30 23</h6>
-            </div>
-            <div className="createdAtArea bodyColumn">
-              <h6>12 Nov 2020</h6>
-            </div>
-            <div className="actionsArea bodyColumn">
-              <BiEditAlt
-                style={{ fontSize: "1.5rem", color: "#5487fc" }}
-                fontSize="large"
-              />
-              &nbsp; &nbsp; &nbsp;
-              <HiOutlineTrash
-                style={{ fontSize: "1.5rem", color: "#5487fc" }}
-              />
-            </div>
-          </div>
+          {agencies ? (
+            agencies.map((agency) => (
+              <div className="table-row">
+                <div className="checkBoxesArea bodyColumn">
+                  <Checkbox inputProps={{ "aria-label": "primary checkbox" }} />
+                </div>
+                <div className="nameArea bodyColumn">
+                  <h6>{agency.name}</h6>
+                </div>
+                <div className="addressArea bodyColumn">
+                  <h6>{agency.address}</h6>
+                </div>
+                <div className="wilayaArea bodyColumn">
+                  <h6>{agency.wilaya}</h6>
+                </div>
+                <div className="phoneArea bodyColumn">
+                  <h6>{agency.phone}</h6>
+                </div>
+                <div className="createdAtArea bodyColumn">
+                  <h6>12 Nov 2020</h6>
+                </div>
+                <div className="actionsArea bodyColumn">
+                  <BiEditAlt
+                    onClick={handleShowEdit}
+                    style={{
+                      fontSize: "1.5rem",
+                      color: "#5487fc",
+                      cursor: "pointer",
+                    }}
+                    fontSize="large"
+                  />
+                  &nbsp; &nbsp; &nbsp;
+                  <HiOutlineTrash
+                    style={{
+                      fontSize: "1.5rem",
+                      color: "#5487fc",
+                      cursor: "pointer",
+                    }}
+                  />
+                </div>
+              </div>
+            ))
+          ) : (
+            <p>Loading...</p>
+          )}
         </div>
       </Paper>
     </>

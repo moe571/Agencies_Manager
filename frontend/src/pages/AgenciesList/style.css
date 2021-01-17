@@ -9,7 +9,7 @@
   
   .sidebar {
     width: 248px;
-    height: 100vh;
+    height: 100%;
     position: fixed;
     border-radius: 6px;
     box-shadow: 0 3px 6px 0 rgba(0, 0, 0, 0.16);
@@ -62,7 +62,7 @@
     color: #576673;
 }
 .agencies-container {
-    height: 400px;
+    height: 100%;
     width: 77%;
     float: right;
     margin-top: 0.2rem;

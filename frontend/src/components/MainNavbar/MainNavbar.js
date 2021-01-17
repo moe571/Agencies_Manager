@@ -54,7 +54,10 @@ function MainNavbar({ logout, auth }) {
       <div className="Navbar">
         <div className="Navbar-Brand">Dashu 0.1</div>
         <div className="Navbar-Links">
-          <Avatar alt="Horvath Attila" src="/static/images/avatar/1.jpg" />
+          <Avatar
+            alt={auth.user ? auth.user.name : null}
+            src="/static/images/avatar/1.jpg"
+          />
           <ClickAwayListener onClickAway={handleClickAway}>
             <div className={classes.root}>
               <button
