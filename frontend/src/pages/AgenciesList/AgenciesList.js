@@ -27,8 +27,14 @@ import MainNavbar from "../../components/MainNavbar/MainNavbar";
 import AddAgencyModal from "../../components/AddAgencyModal/AddAgencyModal";
 import EditAgencyModal from "../../components/EditAgencyModal/EditAgencyModal";
 import moment from "moment";
+import Modal from "react-bootstrap/Modal";
 
-import { addAgency, getAgencies } from "../../actions/AgencyActions";
+import {
+  addAgency,
+  deleteAgency,
+  getAgencies,
+  updateAgency,
+} from "../../actions/AgencyActions";
 
 const useStyles = makeStyles({
   root: {
@@ -93,6 +99,43 @@ function AgenciesList(props) {
   const handleCloseEdit = () => setShowEdit(false);
   const handleShowEdit = () => setShowEdit(true);
 
+  const [selectedAgency, setSelectedAgency] = useState([]);
+  const editAgencyOpen = (_id, name, address, wilaya, commune, phone) => {
+    setSelectedAgency({
+      _id: _id,
+      name: name,
+      address: address,
+      wilaya: wilaya,
+      commune: commune,
+      phone: phone,
+    });
+    setShowEdit(true);
+  };
+
+  const updateAgencyForm = () => {
+    const form = selectedAgency;
+    dispatch(updateAgency(form._id, form));
+
+    setShowEdit(false);
+    window.location.reload(false);
+  };
+
+  // REMOVE Agency
+  const [removeAgencyModal, setRemoveAgencyModal] = useState(false);
+  const removeAgencyClose = () => setRemoveAgencyModal(false);
+  const [removedAgency, setRemovedAgency] = useState(null);
+
+  const removeAgencyOpen = (_id) => {
+    setRemovedAgency(_id);
+
+    setRemoveAgencyModal(true);
+  };
+  const removeAgency = () => {
+    dispatch(deleteAgency(removedAgency));
+    dispatch(getAgencies());
+
+    setRemoveAgencyModal(false);
+  };
   return (
     <>
       <MainNavbar />
@@ -111,7 +154,13 @@ function AgenciesList(props) {
         setPhone={setPhone}
         handleAddForm={handleAddForm}
       />
-      <EditAgencyModal show={showEdit} onHide={handleCloseEdit} />
+      <EditAgencyModal
+        show={showEdit}
+        onHide={handleCloseEdit}
+        selectedAgency={selectedAgency}
+        setSelectedAgency={setSelectedAgency}
+        updateAgencyForm={updateAgencyForm}
+      />
       <MenuIcon
         hidden={closeIcon ? true : false}
         onClick={() => setSideBar(true)}
@@ -242,7 +291,16 @@ function AgenciesList(props) {
                 </div>
                 <div className="actionsArea bodyColumn">
                   <BiEditAlt
-                    onClick={handleShowEdit}
+                    onClick={() =>
+                      editAgencyOpen(
+                        agency._id,
+                        agency.name,
+                        agency.address,
+                        agency.commune,
+                        agency.wilaya,
+                        agency.phone
+                      )
+                    }
                     style={{
                       fontSize: "1.5rem",
                       color: "#5487fc",
@@ -252,6 +310,7 @@ function AgenciesList(props) {
                   />
                   &nbsp; &nbsp; &nbsp;
                   <HiOutlineTrash
+                    onClick={() => removeAgencyOpen(agency._id)}
                     style={{
                       fontSize: "1.5rem",
                       color: "#5487fc",
@@ -266,6 +325,25 @@ function AgenciesList(props) {
           )}
         </div>
       </Paper>
+
+      {/* ------------------Remove Agency Modal------------------------ */}
+
+      <Modal show={removeAgencyModal} onHide={removeAgencyClose}>
+        <Modal.Header closeButton>
+          <Modal.Title>Delete Agency</Modal.Title>
+        </Modal.Header>
+        <Modal.Body>
+          <h5>Are you sure you want to remove the agency ?</h5>
+        </Modal.Body>
+        <Modal.Footer>
+          <Button variant="secondary" onClick={removeAgencyClose}>
+            Close
+          </Button>
+          <Button variant="danger" onClick={removeAgency}>
+            Confirm Delete
+          </Button>
+        </Modal.Footer>
+      </Modal>
     </>
   );
 }

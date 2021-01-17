@@ -10,7 +10,10 @@ const Agency = require("../../models/Agency");
 // @access  Private
 
 router.get("/", (req, res) => {
-  Agency.find()
+  Agency.find({})
+    .select("_id register_date")
+    .sort({register_date: 1)
+    .exec()
     .then((agencies) => res.json(agencies))
     .catch((err) => console.log(err));
 });
@@ -31,6 +34,27 @@ router.post("/", auth, (req, res) => {
     .save()
     .then((agency) => res.status(200).json(agency))
     .catch((err) => console.log(err));
+});
+
+// @route   PUT api/agencies
+// @desc    Edit an Agency
+// @access  PRIVATE
+
+router.put("/update/:id", auth, (req, res) => {
+  Agency.findById(req.params.id)
+    .then((agency) => {
+      agency.name = req.body.name;
+      agency.address = req.body.address;
+      agency.wilaya = req.body.wilaya;
+      agency.commune = req.body.commune;
+      agency.phone = req.body.phone;
+
+      agency
+        .save()
+        .then(() => res.json("Agency updated!"))
+        .catch((err) => res.status(400).json("Error: " + err));
+    })
+    .catch((err) => res.status(400).json("Error: " + err));
 });
 
 // @route   DELETE api/agencies/:id

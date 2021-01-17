@@ -29,7 +29,6 @@ function AddAgencyModal(props) {
               <Form.Label>Name</Form.Label>
               <Form.Control
                 value={name}
-                name={name}
                 onChange={(e) => setName(e.target.value)}
                 type="text"
               />

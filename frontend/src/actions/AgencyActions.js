@@ -32,6 +32,19 @@ export const addAgency = (item) => (dispatch, getState) => {
     .catch((err) => console.log(err));
 };
 
+export const updateAgency = (id, form) => {
+  return async (dispatch, getState) => {
+    axios
+      .put(`/api/agencies/update/${id}`, form, tokenConfig(getState))
+      .then((res) => {
+        return true;
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
+};
+
 export const deleteAgency = (id) => (dispatch, getState) => {
   axios
     .delete(`/api/agencies/${id}`, tokenConfig(getState))

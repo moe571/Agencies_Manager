@@ -14,19 +14,6 @@ const db = config.get("mongoURI");
 
 // Connect to MongoDB
 
-// const MongoClient = require("mongodb").MongoClient;
-// const uri =
-//   "mongodb+srv://mohamed:admin123@cluster0.14bfp.mongodb.net/agenciesManager?retryWrites=true&w=majority";
-// const client = new MongoClient(uri, {
-//   useNewUrlParser: true,
-//   useUnifiedTopology: true,
-// });
-// client.connect((err) => {
-//   const collection = client.db("test").collection("devices");
-//   // perform actions on the collection object
-//   client.close();
-// });
-
 mongoose
   .connect(db, {
     useNewUrlParser: true,
